@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\Technology;
+use Illuminate\Support\Str;
+
 class TechnologySeeder extends Seeder
 {
     /**
@@ -16,5 +19,13 @@ class TechnologySeeder extends Seeder
     {
         $technologies = ['FrontEnd', 'BackEnd', 'FullStack', 'Design', 'DevOps'];
 
+
+        foreach($technologies as $technology){
+            $newTechnology = new Technology();
+            $newTechnology->name = $technology;
+            $newTechnology->slug = Technology::generateSlug($newTechnology->name);
+
+            $newTechnology->save();
+        }
     }
 }
