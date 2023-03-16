@@ -16,6 +16,13 @@
         <div class="col-12">
             <p><strong>Slug:</strong> {{$post->slug}}</p>
             <p><strong>Tipologia:</strong> {{$post->type ? $post->type->name : 'Senza Tipologia'}}</p>
+            <p><strong>Tecnologie:</strong> 
+                @forelse($post->technologies as $technology)
+                {{ $technology->name }}
+                @empty
+                Nessuna Tecnologia selezionata
+                @endforelse
+            </p>
             <label for="" class="d-block"><strong>Contenuto:</strong></label>
             <p>{{$post->content}}</p>
         </div>
