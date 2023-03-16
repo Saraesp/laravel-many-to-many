@@ -11,9 +11,13 @@ class Technology extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'slug'];
 
     public static function generateSlug($name){
         return Str::slug($name, '-');
+    }
+
+    public function posts(){
+        return $this->belongsToMany(Post::class);
     }
 }

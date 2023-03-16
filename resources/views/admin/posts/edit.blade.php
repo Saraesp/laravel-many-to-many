@@ -38,7 +38,29 @@
                         @endforeach
                     </select>
                     @error('type_id')
-                    <div class="text-danger">{{ $messages }}</div>
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group my-3">
+                    <label for="" class="control-label">
+                       <strong>Tecnologie:</strong> 
+                    </label>
+                    @foreach($technologies as $technology)
+                    <div class="form-check @error('technologies') is-invalid @enderror">
+                        @if($errors->any())
+                        <input class="form-check-input" type="checkbox" value="{{ $technology->id }}" name="technologies[]" {{ in_array($technology->id, old('technologies', [])) ? 'checked' : ''}}>
+                        <label class="form-check-label" for="">{{ $technology->name }}</label>
+
+                        @else
+                        <input class="form-check-input" type="checkbox" value="{{ $technology->id }}" name="technologies[]" {{ $post->technologies->contains($technology) ? 'checked' : ''}}>
+                        @endif
+                        <label class="form-check-label" for="">{{ $technology->name }}</label>
+                    </div>
+                    @endforeach
+                    @error('technologies')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                     @enderror
                 </div>
                 <div class="form-group my-3">

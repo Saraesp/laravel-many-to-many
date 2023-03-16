@@ -27,16 +27,18 @@ class StorePostRequest extends FormRequest
             'title'   => ['required', 'unique:posts', 'max:150'],
             'content' => ['nullable'],
             'type_id' => ['nullable', 'exists:types,id'],
+            'technologies' => ['exists:technologies,id']
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Il titolo è richiesto',
-            'title.unique'   => 'E\' già presente un post con questo titolo',
-            'title.max'      => 'Il titolo è troppo lungo',
-            'type_id.exists' => 'Selezionare una Tipologia'
+            'title.required'      => 'Il titolo è richiesto',
+            'title.unique'        => 'E\' già presente un post con questo titolo',
+            'title.max'           => 'Il titolo è troppo lungo',
+            'type_id.exists'      => 'Selezionare una Tipologia',
+            'technologies.exists' => 'La technology selezionata non è valida'
 
         ];
     }

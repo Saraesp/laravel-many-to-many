@@ -10,7 +10,7 @@ use App\Models\Type;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'content', 'slug', 'type_id'];
+    protected $fillable = ['title', 'content', 'slug', 'type_id', 'technology_id'];
 
     use HasFactory;
 
@@ -20,5 +20,9 @@ class Post extends Model
 
     public function type(){
         return $this->belongsTo(Type::class);
+    }
+
+    public function technologies(){
+        return $this->belongsToMany(technology::class);
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePostRequest;
 
 use App\Models\Post;
 use App\Models\Type;
+use App\Models\Technology;
 
 class PostController extends Controller
 {
@@ -32,7 +33,9 @@ class PostController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.posts.create', compact('types'));
+        $technologies = Technology::all();
+
+        return view('admin.posts.create', compact('types', 'technologies'));
     }
 
     /**
@@ -53,6 +56,10 @@ class PostController extends Controller
         $newPost->fill($form_data);
 
         $newPost->save();
+
+        if($request->has('technologies')){
+            $newPost->technologies()->attach($request->technologies);
+        }
 
         return redirect()->route('admin.posts.index')->with('message', 'Post creato corretamente');
     }
@@ -77,7 +84,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $types = Type::all();
-        return view('admin.posts.edit', compact('post', 'types'));
+        $technologies = Technology::all();
+        return view('admin.posts.edit', compact('post', 'types', 'technologies'));
     }
 
     /**
@@ -95,6 +103,10 @@ class PostController extends Controller
         $form_data['slug'] = $slug;
 
         $post->update($form_data);
+
+        if($request->has('technologies')){
+            $post->technologies()->sync($request->technologies);
+        }
 
         return redirect()->route('admin.posts.index')->with('message', $post->title.' è stato modificato correttamente');
     }
